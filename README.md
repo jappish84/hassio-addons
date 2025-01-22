@@ -1,5 +1,5 @@
-# ModestPharaoh's Hass.io Custom Addons Repository 
-This repository contains my custom  add-ons for hass.io.
+# jappish84's MOD of ModestPharaoh's Hass.io Custom Addons Repository 
+This repository contains mostly ModestPharaoh's custom  add-ons for hass.io - although I made some changes to the Multi-DDNS code to ensure verification propagations is successfull.
 
 ## Addons
 

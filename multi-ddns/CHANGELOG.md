@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+- Extended verification of propagation from 120s to 600s
+- Removed unnecessary removal of TXT record prior to new deployment
+
 ## 1.1.0
 - Allow wildcard alias options for Dynu DNS.
 

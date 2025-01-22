@@ -42,3 +42,24 @@ else
     bashio::log.debug "Wait for 60 sec"
     sleep 60
 fi
+
+# Add a delay to ensure DNS propagation
+bashio::log.debug "Domain $domain: Waiting for DNS propagation..."
+sleep 120  # Wait for 120 seconds
+
+# Verify the deployment of the TXT record
+verify_challenge "$domain" "$TXT_VALUE"
+if [ $? -eq 0 ]; then
+    bashio::log.debug "Domain $domain: TXT record verified successfully."
+else
+    bashio::log.warning "Domain $domain: Initial verification failed. Waiting for additional DNS propagation..."
+    sleep 120  # Wait for an additional 120 seconds
+
+    # Verify the deployment of the TXT record again
+    verify_challenge "$domain" "$TXT_VALUE"
+    if [ $? -eq 0 ]; then
+        bashio::log.debug "Domain $domain: TXT record verified successfully after additional wait."
+    else
+        bashio::log.warning "Domain $domain: Failed to verify TXT record after additional wait."
+    fi
+fi

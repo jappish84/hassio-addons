@@ -92,6 +92,19 @@ function deploy_duck_txt_record() {
 
     # Output the response (for debugging purposes)
     bashio::log.debug "Domain $domain: DuckDNS Update Response: $response"
+
+    # Check if the response indicates success
+    if [[ "$response" == *"OK"* ]]; then
+        bashio::log.debug "Domain $domain: DuckDNS TXT record deployed successfully."
+    else
+        bashio::log.warning "Domain $domain: Failed to deploy DuckDNS TXT record."
+        return 1
+    fi
+
+    # Add a delay before verification
+    bashio::log.debug "Domain $domain: Waiting for DNS propagation..."
+    sleep 60  # Wait for 60 seconds
+
     verify_challenge "$domain" "$TXT_VALUE"
     return 0
 }
@@ -122,6 +135,7 @@ function deploy_dynu_txt_record() {
         }' )
         if [ $? -eq 0 ]; then
             failed=0
+            bashio::log.debug "Domain $domain: Dynu TXT record deployed successfully."
             break
         fi
         bashio::log.warning "Domain $domain :Attempt #$i: Failed updating TXT record!"
@@ -131,7 +145,12 @@ function deploy_dynu_txt_record() {
         bashio::log.debug "Dynu challenge deploy response:" "${resp}"
     else
         bashio::log.warning "Domain $domain: Failed updating TXT record multiple times, Dynu seems to be unreachable!!!!"
+        return 1
     fi
+
+    # Add a delay before verification
+    bashio::log.debug "Domain $domain: Waiting for DNS propagation..."
+    sleep 60  # Wait for 60 seconds
 
     verify_challenge "$domain" "$TXT_VALUE"
     return 0

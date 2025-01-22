@@ -44,7 +44,7 @@ function verify_challenge() {
     EXPECTED_TXT=$2
 
     TXT_RECORD="_acme-challenge.$domain"
-    TIMEOUT_SECONDS=120
+    TIMEOUT_SECONDS=600
     CHECK_INTERVAL_SECONDS=10
     elapsed_time=0
 

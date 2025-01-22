@@ -5,7 +5,7 @@
 
 ## Install with Hass.io
 1. Add this url to your hass.io addons repos: \
-`https://github.com/modestpharaoh/hassio-addons`
+`https://github.com/jappish84/hassio-addons`
 2. Update addons list.
 3. Install the Multi-DDNS add-on.
 
@@ -155,7 +155,7 @@ This add-on is at 99% a copy of the official DuckDNS add-on
 In case you've found a bug, please [open an issue on our GitHub][issue].
 
 [forum]: https://community.home-assistant.io
-[issue]: https://github.com/modestpharaoh/hassio-addons/issues
+[issue]: https://github.com/jappish84/hassio-addons/issues
 [dynudns]: https://www.dynudns.org
 [duckdns]: https://www.duckdns.org
 [dynudns-faq]: https://www.dynu.com/FAQ/Dynamic-DNS-Service

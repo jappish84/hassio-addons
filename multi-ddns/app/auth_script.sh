@@ -19,7 +19,7 @@ if [[ $domain != *"*."* ]]; then
         bashio::log.debug "Domain $domain: DuckDNS deploy challenge..."
 
         # Remove old TXT record from DuckDNS. However this is not necessary, as it will be always override!
-        rm_duck_txt_record "$domain" "$DUCKDNS_TOKEN"
+        #rm_duck_txt_record "$domain" "$DUCKDNS_TOKEN"
 
         deploy_duck_txt_record "$domain" "$DUCKDNS_TOKEN" "$TXT_VALUE"
     else

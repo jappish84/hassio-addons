@@ -44,19 +44,23 @@ function verify_challenge() {
     EXPECTED_TXT=$2
 
     TXT_RECORD="_acme-challenge.$domain"
-    TIMEOUT_SECONDS=600
-    CHECK_INTERVAL_SECONDS=10
+    TIMEOUT_SECONDS=900
+    CHECK_INTERVAL_SECONDS=15
     elapsed_time=0
 
     bashio::log.debug "Domain $domain: Verify challenge before return..."
     for ((i=0; i<TIMEOUT_SECONDS; i+=CHECK_INTERVAL_SECONDS)); do
         # Check the DNS TXT record using dig
-        txt_value=$(dig +short TXT @8.8.8.8 ${TXT_RECORD})
+        txt_value=$(dig +short TXT @1.1.1.1 ${TXT_RECORD}) # Using Cloudflare DNS server
+
+# # MAYBE Check the DNS TXT record using multiple DNS servers?
+#         txt_value=$(dig +short TXT @8.8.8.8 ${TXT_RECORD} || dig +short TXT @1.1.1.1 ${TXT_RECORD})
 
         # Remove double quotes from the TXT value (if present)
         txt_value="${txt_value//\"/}"
 
         bashio::log.debug "Domain $domain: Current TXT value for $TXT_RECORD: $txt_value"
+
 
         # Check if the TXT value matches the expected value
         if [ "$txt_value" == "$EXPECTED_TXT" ]; then
@@ -103,7 +107,7 @@ function deploy_duck_txt_record() {
 
     # Add a delay before verification
     bashio::log.debug "Domain $domain: Waiting for DNS propagation..."
-    sleep 60  # Wait for 60 seconds
+    sleep 120  # Wait for 60 seconds
 
     verify_challenge "$domain" "$TXT_VALUE"
     return 0
@@ -150,7 +154,7 @@ function deploy_dynu_txt_record() {
 
     # Add a delay before verification
     bashio::log.debug "Domain $domain: Waiting for DNS propagation..."
-    sleep 60  # Wait for 60 seconds
+    sleep 120  # Wait for 60 seconds
 
     verify_challenge "$domain" "$TXT_VALUE"
     return 0

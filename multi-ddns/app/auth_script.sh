@@ -43,6 +43,7 @@ else
     sleep 60
 fi
 
+
 # Add a delay to ensure DNS propagation
 bashio::log.debug "Domain $domain: Waiting for DNS propagation..."
 sleep 120  # Wait for 120 seconds
